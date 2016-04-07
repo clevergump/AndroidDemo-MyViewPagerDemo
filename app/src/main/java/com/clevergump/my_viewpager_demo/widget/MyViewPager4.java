@@ -25,14 +25,13 @@ public class MyViewPager4 extends ViewGroup {
     private int mScreenHeightPixels;
     private int mChildCount;
     private int mNonGoneChildCount;
-    // 上一次发生滑动事件后, 手指停止处的x坐标. 对于滑动距离小于mTouchSlop的滑动, 将不会更新该变量的数值.
+    // 上一次发生滑动事件 (只有滑动距离大于mTouchSlop的滑动, 才会被认为是滑动事件, 否则会被直接舍弃掉)后, 手指
+    // 停止处的x坐标. 只有滑动距离大于或等于mTouchSlop的滑动, 才会更新该变量的数值; 否则就不更新该变量的数值.
     private float mLastScrolledRawX;
     private int mTouchSlop;
     private Scroller mScroller;
     // 发生 ACTION_DOWN 时的 rawX.
     private float mDownRawX;
-    // 发生 ACTION_DOWN 时的 scrollX.
-    private int mDownScrollX;
     // 发生 ACTION_DOWN 时所触摸的子 View的 index (从0开始).
     private int mChildIndexWhenDown;
 
@@ -169,7 +168,7 @@ public class MyViewPager4 extends ViewGroup {
                     mScroller.abortAnimation();
                 }
                 mDownRawX = currRawX;
-                calcChildIndexWhenActionDown();
+                calcFingerTouchedChildIndexWhenActionDown();
                 break;
             case MotionEvent.ACTION_MOVE:
                 // 如果本次滑动距离小于 mTouchSlop, 则什么都不执行, 也不会更新 mLastScrolledRawX 的数值,
@@ -184,17 +183,18 @@ public class MyViewPager4 extends ViewGroup {
                 float downToUpDx = currRawX - mDownRawX;
                 // 屏幕宽度的一半
                 int halfScreenWidth = mScreenWidthPixels >> 1;
-                // 如果手指离开时, 总体来看是手指向左滑动, 并且滑动的距离大于屏幕宽度的一半时, 就继续平滑移动到
-                // 下一个子View
+                // 如果手指离开时, 从总体来看是手指向左滑动(即: 下一个子View逐渐进入到屏幕中), 并且滑动的距离
+                // 大于屏幕宽度的一半时, 就继续平滑移动到下一个子View完整停留在屏幕内为止.
                 if (downToUpDx < 0 && Math.abs(downToUpDx) >= halfScreenWidth) {
                     smoothScrollToNextChild();
                 }
-                // 如果手指离开时, 总体来看是手指向右滑动, 并且滑动的距离大于屏幕宽度的一半时, 就继续平滑移动到
-                // 下一个子View
+                // 如果手指离开时, 从总体来看是手指向右滑动(即: 上一个子View逐渐进入到屏幕中), 并且滑动的距离
+                // 大于屏幕宽度的一半时, 就继续平滑移动到上一个子View完整停留在屏幕内为止.
                 else if (downToUpDx > 0 && Math.abs(downToUpDx) >= halfScreenWidth) {
                     smoothScrollToPreviousChild();
                 }
-                // 如果手指离开时, 不论是向哪个方向滑动, 只要滑动的距离小于屏幕宽度的一半, 就会平滑移动回到最开始的位置
+                // 如果手指离开时, 从总体来看不论是向哪个方向滑动, 只要滑动的距离小于屏幕宽度的一半, 就会
+                // 向与刚才滑动相反的方向平滑移动回到原先的位置然后停止.
                 else {
                     smoothScrollBack();
                 }
@@ -205,7 +205,7 @@ public class MyViewPager4 extends ViewGroup {
     }
 
     /**
-     * 平滑移动回到原先的位置(手指按下前, 该控件的位置)
+     * 平滑移动回到原先的位置 (即: 手指按下前, 该控件停留的位置)
      */
     private void smoothScrollBack() {
         float dx = Math.abs(getScrollX()) - mScreenWidthPixels * mChildIndexWhenDown;
@@ -215,7 +215,7 @@ public class MyViewPager4 extends ViewGroup {
     }
 
     /**
-     * 平滑移动到上一个子View
+     * 平滑移动到上一个子View, 然后停止
      */
     private void smoothScrollToPreviousChild() {
         // 说明当前的子View已经随手指向右移动了一大半的距离(该距离超过了整个屏幕宽度的一半)了, 那么只需要继续
@@ -227,7 +227,7 @@ public class MyViewPager4 extends ViewGroup {
     }
 
     /**
-     * 平滑移动到下一个子View
+     * 平滑移动到下一个子View, 然后停止
      */
     private void smoothScrollToNextChild() {
         // 说明当前的子View已经随手指向左移动了一大半的距离(该距离超过了整个屏幕宽度的一半)了, 那么只需要继续
@@ -242,15 +242,15 @@ public class MyViewPager4 extends ViewGroup {
      * 计算发生 ACTION_DOWN 事件时, 所触摸到的子View的 index(index从0开始). 该计算值结合手指抬起时一共滑动
      * 的距离值, 可以计算出发生手指抬起后, 页面要进行平滑滑动的方向和滑动距离.
      */
-    private void calcChildIndexWhenActionDown() {
+    private void calcFingerTouchedChildIndexWhenActionDown() {
         // 发生 ACTION_DOWN 事件时(即: 有手指按下时), 计算手指按下的点到该ViewGroup的左边框(该左边框可能在屏幕外)的距离
         float fingerToMyLeftBorderDistanceWhenDown = Math.abs(getScrollX()) + Math.abs(mDownRawX);
         mChildIndexWhenDown = (int)(fingerToMyLeftBorderDistanceWhenDown / mScreenWidthPixels);
-//        Toast.makeText(getContext(), "childIndex = " + mChildIndexWhenDown, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "down: childIndex = " + mChildIndexWhenDown, Toast.LENGTH_LONG).show();
     }
 
     /**
-     * 判断给定的滑动坐标差所代表的滑动距离是否超过了 touchSlop (即: Android 系统认可这是一次滑动事件所能
+     * 判断给定的滑动坐标差所代表的滑动距离是否超过了 touchSlop (即: Android 系统认可这是一次滑动事件时所能
      * 滑动的最小距离)
      * @param deltaDistance 滑动坐标差, 可能为正数, 也可能为负数.
      * @return 给定的滑动坐标差所代表的滑动距离是否超过了 touchSlop. true表示超过了, false表示未超过.
@@ -273,7 +273,7 @@ public class MyViewPager4 extends ViewGroup {
      * 左边界和最右边的子View的右边界)
      * @param dx 在x方向上滑动的 deltaX, 注意: 可能为负数.
      * @return 本次滑动是否符合Android系统的滑动要求(即: 滑动距离是否超过了touchSlop). 返回true表示符合该要求;
-     *         返回false表示不符合该要求, 这种情况下应该直接舍弃本次滑动.
+     *         返回false表示不符合该要求, false 情况下应该直接舍弃本次滑动.
      */
     private void instantScrollWithFinger(float dx) {
         dx = adjustDeltaXDistance(dx);
@@ -311,8 +311,9 @@ public class MyViewPager4 extends ViewGroup {
 
     /**
      * 平滑移动
-     * @param dx
-     * @param dy
+     * @param dx 在x方向上平滑移动的距离
+     * @param dy 在y方向上平滑移动的距离
+     * @param durationTimeMillis 完成这次平滑移动所需要的时间
      */
     private void smoothScrollBy(int dx, int dy,  int durationTimeMillis){
         int startX = getScrollX();
@@ -344,7 +345,7 @@ public class MyViewPager4 extends ViewGroup {
 
     /**
      * 判断执行这句代码的语句所在的线程是不是主线程
-     * @return
+     * @return true表示执行这句代码的语句所在的线程是主线程, false表示执行这句代码的语句所在的线程不是主线程.
      */
     private boolean isMainThread() {
         return Looper.getMainLooper() == Looper.myLooper();
