@@ -18,7 +18,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bb"
+        android:background="@drawable/a"
         android:scaleType="centerCrop"/>
 
 </com.clevergump.my_viewpager_demo.widget.MyViewPager1>

@@ -22,13 +22,13 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/b"
+            android:background="@drawable/c"
             android:scaleType="centerCrop"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/c"
+            android:background="@drawable/b"
             android:scaleType="centerCrop"/>
 
         <ImageView

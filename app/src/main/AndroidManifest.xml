@@ -37,6 +37,14 @@
         </activity>
         <activity android:name="com.clevergump.my_viewpager_demo.MainActivity4"
             android:configChanges="keyboardHidden|orientation|screenSize">
+<!--            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name="com.clevergump.my_viewpager_demo.MainActivity5"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

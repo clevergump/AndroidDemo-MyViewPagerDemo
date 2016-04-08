@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.clevergump.my_viewpager_demo.widget.MyViewPager5
+        android:id="@+id/myViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#33ff0000">
+        </ListView>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/a"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/b"
+            android:scaleType="centerCrop"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#330000ff">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Wolfsburg 2-0 Real Madrid: German side record stunning first-leg win"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/realmadrid_wolfsburg_1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Wolfsburg beat Real Madrid 2-0 in the first leg of their Champions League quarter-final on Wednesday night at the Volkswagen Arena.
+
+Ricardo Rodriguez struck a penalty and Maxi Arnold added a second in the first half as they gave themselves a huge advantage at the halfway point in the tie.
+
+The result leaves Zinedine Zidane's side with a real mountain to climb in the second leg at the Bernabeu next Tuesday night."/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/realmadrid_wolfsburg_2"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="For Wolfsburg, though, it was a glorious night in their first ever meeting with Real and their first ever Champions League quarter-final. Fresh from their El Clasico win on Saturday, Real started brighter and had the ball in the net after less than two minutes as Cristiano Ronaldo raced through onto Karim Benzema's pass before slotting home. However, much to the Portuguese forward's annoyance the assistant referee had his flag raised for offside." />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/realmadrid_wolfsburg_3"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Wolfsburg were more than happy to sit back and counter-attack, with Julian Draxler and Bruno Henrique threatening down the flanks, and those two nearly combined to open the scoring after 12 minutes as Draxler clipped the ball to the far post, but Henrique could only head his effort into the arms of Real Madrid goalkeeper Keylor Navas.
+
+Draxler, though, would be involved in the penalty that saw Wolfsburg take the lead. His ball found Andre Schurrle in the area before the former Chelsea winger went down under a challenge from Casemiro,
+
+Moments earlier, Gareth Bale had gone down in the opposite box and the referee had waved it away, but Wolfsburg got their decision and Rodrguez stepped up to send Navas the wrong way.
+
+The goal proved inspirational for Wolfsburg and, with Real Madrid looking frail defensively, the home side went in pursuit of a second. Seven minutes later they found it, Henrique put a low ball across the six-yard box and Arnold was on hand to turn it home. "/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/realmadrid_wolfsburg_4"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="All Real's threat in the first half came from Bale down the left, and he got to the byline brilliantly after 33 minutes and put one on a plate for Benzema eight yards out. The Frenchman, however, could only head wide with the goal at his mercy. And worse was to come for him as he was forced off with an injury after 41 minutes.
+
+Wolfsburg came out for the second half with the intention to defend what they had, with Real struggling badly to break them down.
+
+It took 23 more minutes for another real opportunity to come, and it fell to Wolfsburg as Schurrle fired over from a glorious position after an excellent counter-attack.
+
+One Real goal would have changed the complexion of the tie completely, and Ronaldo nearly found it with just over 15 minutes to go. The Portuguese forward was picked out by Isco as he broke in behind the Wolfsburg defence, but Benaglio got off his line brilliantly to make the save and keep their two-goal advantage heading to Madrid."/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </com.clevergump.my_viewpager_demo.widget.MyViewPager5>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="getScrollX()"
+        android:onClick="getCurrScrollX"/>
+
+</LinearLayout>

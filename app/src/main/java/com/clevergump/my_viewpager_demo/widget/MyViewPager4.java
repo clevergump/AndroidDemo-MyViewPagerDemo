@@ -12,7 +12,8 @@ import android.widget.Scroller;
 import com.clevergump.my_viewpager_demo.utils.DensityUtils;
 
 /**
- * 版本4 (功能相对较完善, bug相对较少的版本). 但还有待完善的细节是: 图片被显著拉伸, 需保持一定范围内的宽高比.
+ * 版本4. 但还有待完善的细节是: 图片被显著拉伸, 需保持一定范围内的宽高比. 未处理滑动冲突. 将会在下一个版本中处理
+ * 滑动冲突, 详情请见 {@link MyViewPager5}
  *
  * @author zhangzhiyi
  * @version 1.0
